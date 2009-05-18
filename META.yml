@@ -1,0 +1,21 @@
+---
+name: Object-Simple-Error
+version: 0.01_01
+author:
+  - 'Yuki Kimoto <kimoto.yuki@gmail.com>'
+abstract: Error object for Object::Simple
+license: perl
+resources:
+  license: ~
+requires:
+  Carp: 1.04
+build_requires:
+  Test::More: 0
+provides:
+  Object::Simple::Error:
+    file: lib/Object/Simple/Error.pm
+    version: 0.01_01
+generated_by: Module::Build version 0.31012
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2

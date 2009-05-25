@@ -1,14 +1,14 @@
 package Object::Simple::Error;
 use 5.008_001;
 
-our $VERSION = '0.01_01';
+our $VERSION = '0.01_02';
 
 use warnings;
 use strict;
 use Carp;
 use overload '""' => sub{
     my $self = shift;
-    return $self->msg . $self->pos;
+    return $self->message . $self->position;
 };
 
 ### accessor
@@ -24,27 +24,27 @@ sub type{
     }
 }
 
-sub msg{
+sub message{
     my $self = shift;
     
     if( @_ ){
-        $self->{ msg } = $_[0];
+        $self->{ message } = $_[0];
         return;
     }
     else{
-        return $self->{ msg };
+        return $self->{ message };
     }
 }
 
-sub pkg{
+sub class{
     my $self = shift;
     
     if( @_ ){
-        $self->{ pkg } = $_[0];
+        $self->{ class } = $_[0];
         return;
     }
     else{
-        return $self->{ pkg };
+        return $self->{ class };
     }
 }
 
@@ -60,27 +60,27 @@ sub attr{
     }
 }
 
-sub val{
+sub value{
     my $self = shift;
     
     if( @_ ){
-        $self->{ val } = $_[0];
+        $self->{ value } = $_[0];
         return;
     }
     else{
-        return $self->{ val };
+        return $self->{ value };
     }
 }
 
-sub pos{
+sub position{
     my $self = shift;
     
     if( @_ ){
-        $self->{ pos } = $_[0];
+        $self->{ position } = $_[0];
         return;
     }
     else{
-        return $self->{ pos };
+        return $self->{ position };
     }
 }
 
@@ -101,28 +101,28 @@ sub new{
 
     # bless
     my $self = {};
-    my $pkg = ref $proto || $proto;
-    bless $self, $pkg;
+    my $class = ref $proto || $proto;
+    bless $self, $class;
     
     # check args
     @args = %{ $args[0] } if ref $args[0] eq 'HASH';
     croak 'key-value pairs must be passed to new.' if @args % 2;
     
     # set args
-    while( my ( $attr, $val ) = splice( @args, 0, 2 ) ){
+    while( my ( $attr, $value ) = splice( @args, 0, 2 ) ){
         croak "Invalid key '$attr' is passed to new." unless $self->can( $attr );
         
-        $self->{ $attr } = $val;
+        $self->{ $attr } = $value;
     }
     
     $self->type( 'unknown' ) unless defined $self->type;
-    $self->msg( '' ) unless defined $self->msg;
-    $self->pkg( '' ) unless defined $self->pkg;
+    $self->message( '' ) unless defined $self->message;
+    $self->class( '' ) unless defined $self->class;
     $self->attr( '' ) unless defined $self->attr;
     $self->info( {} ) unless defined $self->info;
     
     local $Carp::CarpLevel += 1;
-    $self->pos( Carp::shortmess("") ) unless defined $self->pos;
+    $self->position( Carp::shortmess("") ) unless defined $self->position;
     
     return $self;
 }
@@ -141,7 +141,7 @@ Object::Simple::Error - Error object for Object::Simple
 
 =head1 VERSION
 
-Version 0.01_01
+Version 0.01_02
 
 =cut
 
@@ -172,14 +172,14 @@ Please wait untill Object::Simple::Error is stable.
     # create error object;
     my $err_str = Object::Simple::Error->new( 
         type => 'err_type',
-        msg => 'message',
+        message => 'message',
         info => { some1 => 'some info1', some2 => 'some info2' }
     );
     
     # throw err
     Object::Simple::Error->throw( 
         type => 'err_type',
-        msg => 'message',
+        message => 'message',
         info => { some1 => 'some info1', some2 => 'some info2' }
     );
 
@@ -191,33 +191,33 @@ You can contain variouse error information.
 
 is error type.
 
-=head2 msg
+=head2 message
 
 is error message
 
-=head2 pos
+=head2 position
 
 is position in which error is occured.
 
 You do not have to specify this attr in create_err_str argument.
 
-pos is automatically set, parsing croak message or die message.
+position is automatically set, parsing croak message or die message.
 
-=head2 pkg
+=head2 class
 
-is package name
+class name
 
 =head2 attr
 
 is attr name
 
-=head2 val
+=head2 value
 
-is attr value
+is attribute value
 
 =head3 info
 
-is information other than type, msg or pos.
+is information other than type, message or position.
 
 This is hash ref.
 
@@ -231,7 +231,7 @@ is constructor;
 
     my $err_obj = Object::Simple::Error->new(
         type => 'err_type',
-        msg => 'message',
+        message => 'message',
         info => { some1 => 'some info1', some2 => 'some info2' }
     );
 
@@ -241,7 +241,7 @@ thorw error.
 
     Object::Simple::Error->throw( 
         type => 'err_type',
-        msg => 'message',
+        message => 'message',
         info => { some1 => 'some info1', some2 => 'some info2' }
     );
     
@@ -249,7 +249,7 @@ This is same as
 
     die Object::Simple::Error->new( 
         type => 'err_type',
-        msg => 'message',
+        message => 'message',
         info => { some1 => 'some info1', some2 => 'some info2' }
     );
 
@@ -260,7 +260,7 @@ Yuki Kimoto, C<< <kimoto.yuki at gmail.com> >>
 =head1 BUGS
 
 Please report any bugs or feature requests to C<bug-simo-error at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Object::Simple-Error>.  I will be notified, and then you'll
+the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Object-Simple-Error>.  I will be notified, and then you'll
 automatically be notified of progress on your bug as I make changes.
 
 

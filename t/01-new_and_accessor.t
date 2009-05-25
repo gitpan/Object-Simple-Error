@@ -6,11 +6,11 @@ package Some;
 use Object::Simple::Error;
 
 sub err{
-    die Object::Simple::Error->new( msg => 'a' );
+    die Object::Simple::Error->new( message => 'a' );
 }
 
 sub throw_err{
-    Object::Simple::Error->throw( msg => 'a' );
+    Object::Simple::Error->throw( message => 'a' );
 }
 
 package main;
@@ -18,26 +18,26 @@ package main;
 {
     my $t = Object::Simple::Error->new(
         type => 1,
-        msg => 2,
-        pos => 3,
+        message => 2,
+        position => 3,
         info => { a => 1 },
-        pkg => 4,
+        class => 4,
         attr => 5,
-        val => 6
+        value => 6
     );
     isa_ok( $t, 'Object::Simple::Error' );
     
     my $setter_return_type = $t->type( 11 );
-    my $setter_return_msg = $t->msg( 22 );
-    my $setter_return_pos = $t->pos( 33 );
+    my $setter_return_message = $t->message( 22 );
+    my $setter_return_position = $t->position( 33 );
     my $setter_return_info = $t->info( { b => 2 } );
-    my $setter_return_pkg = $t->pkg( 44 );
+    my $setter_return_class = $t->class( 44 );
     my $setter_return_attr = $t->attr( 55 );
-    my $setter_return_val = $t->val( 66 );
+    my $setter_return_value = $t->value( 66 );
     
-    is_deeply( [ $setter_return_type, $setter_return_msg, $setter_return_pos, $setter_return_info, $setter_return_pkg, $setter_return_attr, $setter_return_val ], 
+    is_deeply( [ $setter_return_type, $setter_return_message, $setter_return_position, $setter_return_info, $setter_return_class, $setter_return_attr, $setter_return_value ], 
                [ undef, undef, undef, undef, undef, undef, undef ], 'setter_return value' );
-    is_deeply( [ $t->type, $t->msg, $t->pos, $t->info, $t->pkg, $t->attr, $t->val ],
+    is_deeply( [ $t->type, $t->message, $t->position, $t->info, $t->class, $t->attr, $t->value ],
                [ 11, 22, 33, { b => 2 }, 44, 55, 66 ], 'set value' );
 }
 
@@ -47,19 +47,19 @@ package main;
 }
 
 {
-    my $t = Object::Simple::Error->new( pos => 1 );
-    is_deeply( [ $t->type, $t->msg, $t->pos, $t->info] , [ 'unknown', '', 1, {} ], 'default value' );
+    my $t = Object::Simple::Error->new( position => 1 );
+    is_deeply( [ $t->type, $t->message, $t->position, $t->info] , [ 'unknown', '', 1, {} ], 'default value' );
 }
 
 {
-    my $t = Object::Simple::Error->new( msg => 'a', pos => 'b' );
+    my $t = Object::Simple::Error->new( message => 'a', position => 'b' );
     is( $t, 'ab', 'overload ""' );
 }
 
 {
     my $t = Object::Simple::Error->new;
-    like( $t->pos, qr/at/, 'err postion' );
-    is( $t->pkg, '', 'pkg default' );
+    like( $t->position, qr/at/, 'err positiontion' );
+    is( $t->class, '', 'class default' );
     is( $t->attr, '', 'attr default' );
 }
 
@@ -79,7 +79,7 @@ package main;
     like( $@, qr/ at /, 'err' );
     like( $@, qr/$line/, 'err line' );
     is( $@->type, 'unknown', 'object member type' );
-    is( $@->msg, 'a', 'object member msg' );
+    is( $@->message, 'a', 'object member message' );
 }
 
 {
@@ -88,10 +88,10 @@ package main;
     like( $@, qr/ at /, 'err' );
     like( $@, qr/$line/, 'err line' );
     is( $@->type, 'unknown', 'object member type' );
-    is( $@->msg, 'a', 'object member msg' );
+    is( $@->message, 'a', 'object member message' );
 }
 
 {
-    my $t = Object::Simple::Error->new( pos => '' );
-    is( $t->pos, '' , 'empty string' );
+    my $t = Object::Simple::Error->new( position => '' );
+    is( $t->position, '' , 'empty string' );
 }

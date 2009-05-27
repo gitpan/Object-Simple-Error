@@ -1,7 +1,7 @@
 package Object::Simple::Error;
 use 5.008_001;
 
-our $VERSION = '0.01_02';
+our $VERSION = '0.0201';
 
 use warnings;
 use strict;
@@ -141,7 +141,7 @@ Object::Simple::Error - Error object for Object::Simple
 
 =head1 VERSION
 
-Version 0.01_02
+Version 0.0201
 
 =cut
 

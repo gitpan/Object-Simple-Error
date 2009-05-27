@@ -1,6 +1,6 @@
 ---
 name: Object-Simple-Error
-version: 0.01_02
+version: 0.0201
 author:
   - 'Yuki Kimoto <kimoto.yuki@gmail.com>'
 abstract: Error object for Object::Simple
@@ -14,7 +14,7 @@ build_requires:
 provides:
   Object::Simple::Error:
     file: lib/Object/Simple/Error.pm
-    version: 0.01_02
+    version: 0.0201
 generated_by: Module::Build version 0.31012
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html

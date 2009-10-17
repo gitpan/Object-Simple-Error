@@ -1,7 +1,7 @@
 package Object::Simple::Error;
 use 5.008_001;
 
-our $VERSION = '0.0201';
+our $VERSION = '0.0301';
 
 use warnings;
 use strict;
@@ -137,11 +137,15 @@ sub throw{
 
 =head1 NAME
 
-Object::Simple::Error - Error object for Object::Simple
+Object::Simple::Error - Error object for Object::Simple [DISCOURAGED]
+
+=head1 CAUTION
+
+This module is discouraged now, because I feel L<Object::Simple> do not need error object.
 
 =head1 VERSION
 
-Version 0.0201
+Version 0.0301
 
 =cut
 
